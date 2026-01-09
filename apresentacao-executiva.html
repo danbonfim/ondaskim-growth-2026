@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OndaSkim 2026 - Apresentacao Executiva</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#001a33;--accent:#00bcd4;--secondary:#0d47a1;--light:#f5f5f5}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#f5f5f5 0%,#fff 100%);color:#333;line-height:1.7}
+header{background:linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);color:white;padding:2rem;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.1)}
+nav{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}
+h1{font-size:1.8rem}
+a.btn{color:white;text-decoration:none;padding:0.5rem 1rem;border:1px solid white;border-radius:4px;transition:all 0.3s;margin-left:1rem}
+a.btn:hover{background:white;color:var(--primary)}
+.container{max-width:1400px;margin:2rem auto;padding:0 2rem}
+.section{background:white;margin:2rem 0;padding:2rem;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.05);border-left:4px solid var(--accent)}
+h2{color:var(--primary);margin-bottom:1.5rem;font-size:1.6rem}
+.charts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:2rem;margin:2rem 0}
+.chart-container{position:relative;height:350px;background:#f9f9f9;padding:1.5rem;border-radius:8px;border:1px solid #eee}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin:2rem 0}
+.stat-card{background:linear-gradient(135deg,#001a33 0%,#0d47a1 100%);color:white;padding:1.5rem;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);text-align:center}
+.stat-value{font-size:2.5rem;font-weight:bold;color:#00bcd4;margin:0.5rem 0}
+.stat-label{font-size:0.9rem;opacity:0.9}
+.nav-buttons{display:flex;gap:1rem;margin-top:1.5rem}
+.nav-buttons a{display:inline-block;padding:0.75rem 1.5rem;background:var(--accent);color:var(--primary);text-decoration:none;border-radius:4px;font-weight:600;transition:all 0.3s}
+.nav-buttons a:hover{background:var(--primary);color:white;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+footer{background:var(--primary);color:white;text-align:center;padding:2rem;margin-top:3rem}
+@media (max-width:768px){.charts-grid{grid-template-columns:1fr}.stat-card{padding:1rem}.stat-value{font-size:1.8rem}}
+</style>
+</head>
+<body>
+<header><nav><h1>OndaSkim 2026</h1><div><a href="index.html" class="btn">Home</a><a href="estrategia.html" class="btn">Estrategia</a></div></nav></header>
+<div class="container">
+<div class="section"><h2>Apresentacao Executiva Interativa</h2><p>Visualizacao de dados, metricas-chave e projections para 2026. Selecione os graficos abaixo para explorar insights detalhados.</p></div>
+<div class="section"><h2>KPIs Principais</h2><div class="stats-grid">
+<div class="stat-card"><div class="stat-label">Orcamento Total</div><div class="stat-value">R$ 600k</div></div>
+<div class="stat-card"><div class="stat-label">Novos Clientes</div><div class="stat-value">60</div></div>
+<div class="stat-card"><div class="stat-label">Receita Anual</div><div class="stat-value">R$ 5.76M</div></div>
+<div class="stat-card"><div class="stat-label">ROI Medio</div><div class="stat-value">860%</div></div>
+<div class="stat-card"><div class="stat-label">CAC Medio</div><div class="stat-value">R$ 2.156</div></div>
+<div class="stat-card"><div class="stat-label">LTV/CAC</div><div class="stat-value">9,6x</div></div>
+</div></div>
+<div class="section"><h2>Graficos Interativos</h2><div class="charts-grid">
+<div class="chart-container"><canvas id="budgetChart"></canvas></div>
+<div class="chart-container"><canvas id="roiChart"></canvas></div>
+<div class="chart-container"><canvas id="revenueChart"></canvas></div>
+<div class="chart-container"><canvas id="cacChart"></canvas></div>
+</div></div>
+<div class="section"><h2>Detalhes por Canal</h2><div class="charts-grid">
+<div class="chart-container"><canvas id="channelPerformance"></canvas></div>
+<div class="chart-container"><canvas id="paybackChart"></canvas></div>
+</div></div>
+<div class="section nav-buttons"><a href="index.html">Voltar ao Inicio</a><a href="estrategia.html">Ver Estrategia Completa</a></div>
+</div>
+<footer><p>OndaSkim 2026 | Humanizamos a Comunicacao Corporativa | Janeiro 2026</p></footer>
+<script>
+Chart.defaults.font.family=\"-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif\";
+Chart.defaults.color=\"#666\";
+const primaryColor=\"#001a33\",accentColor=\"#00bcd4\",secondaryColor=\"#0d47a1\";
+const budgetCtx=document.getElementById(\"budgetChart\").getContext(\"2d\");
+new Chart(budgetCtx,{type:\"doughnut\",data:{labels:[\"LinkedIn Organico\",\"Estrutura Comercial\",\"Indicacao\",\"Comunidades/G4\",\"LinkedIn Ads\",\"Conteudo (SEO)\"],datasets:[{data:[140,150,80,100,70,40],backgroundColor:[\"#FF6384\",\"#36A2EB\",\"#FFCE56\",\"#4BC0C0\",\"#9966FF\",\"#FF9F40\"],borderColor:\"white\",borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:\"bottom\",labels:{boxWidth:15,padding:20,font:{size:12}}}}}});
+const roiCtx=document.getElementById(\"roiChart\").getContext(\"2d\");
+new Chart(roiCtx,{type:\"bar\",data:{labels:[\"LinkedIn Org\",\"Indicacao\",\"Comunidades\",\"Ads\",\"Estrutura\",\"SEO\"],datasets:[{label:\"ROI (%)\",data:[1500,3827,850,368,400,0],backgroundColor:accentColor,borderColor:primaryColor,borderWidth:1,borderRadius:4}]},options:{indexAxis:\"y\",responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true}}}});
+const revenueCtx=document.getElementById(\"revenueChart\").getContext(\"2d\");
+new Chart(revenueCtx,{type:\"line\",data:{labels:[\"Q1\",\"Q2\",\"Q3\",\"Q4\"],datasets:[{label:\"Receita Projetada (R$ mil)\",data:[864,1584,1920,1440],borderColor:accentColor,backgroundColor:\"rgba(0,188,212,0.1)\",borderWidth:3,fill:true,tension:0.4,pointBackgroundColor:primaryColor,pointBorderColor:accentColor,pointBorderWidth:2,pointRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true}},scales:{y:{beginAtZero:true}}}});
+const cacCtx=document.getElementById(\"cacChart\").getContext(\"2d\");
+new Chart(cacCtx,{type:\"radar\",data:{labels:[\"LinkedIn Org\",\"Indicacao\",\"Comunidades\",\"Ads\",\"SEO\"],datasets:[{label:\"CAC (R$)\",data:[872,2444,3810,2412,4350],borderColor:accentColor,backgroundColor:\"rgba(0,188,212,0.2)\",borderWidth:2,pointBackgroundColor:primaryColor,pointBorderColor:accentColor,pointBorderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{beginAtZero:true,min:0,max:5000}}}});
+const perfCtx=document.getElementById(\"channelPerformance\").getContext(\"2d\");
+new Chart(perfCtx,{type:\"bar\",data:{labels:[\"LinkedIn Org\",\"Est. Comercial\",\"Indicacao\",\"Comunidades\",\"Ads\",\"SEO\"],datasets:[{label:\"Orcamento (R$)\",data:[140,150,80,100,70,40],backgroundColor:secondaryColor,borderRadius:4},{label:\"Meta de Clientes\",data:[47,30,16,11,7,3],backgroundColor:accentColor,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}});
+const paybackCtx=document.getElementById(\"paybackChart\").getContext(\"2d\");
+new Chart(paybackCtx,{type:\"bubble\",data:{datasets:[{label:\"LinkedIn Org\",data:[{x:872,y:1500,r:15}],backgroundColor:\"rgba(255,99,132,0.6)\",borderColor:\"rgb(255,99,132)\",borderWidth:1},{label:\"Indicacao\",data:[{x:2444,y:3827,r:20}],backgroundColor:\"rgba(54,162,235,0.6)\",borderColor:\"rgb(54,162,235)\",borderWidth:1},{label:\"Comunidades\",data:[{x:3810,y:850,r:12}],backgroundColor:\"rgba(255,206,86,0.6)\",borderColor:\"rgb(255,206,86)\",borderWidth:1},{label:\"Ads\",data:[{x:2412,y:368,r:10}],backgroundColor:\"rgba(153,102,255,0.6)\",borderColor:\"rgb(153,102,255)\",borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true}},scales:{x:{title:{display:true,text:\"CAC (R$)\"}},y:{title:{display:true,text:\"ROI (%)\"}}}}})
+</script>
+</body>
+</html>
